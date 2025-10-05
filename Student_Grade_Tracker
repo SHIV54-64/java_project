@@ -1,0 +1,87 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Student class to store student details and grades
+class Student {
+    String name;
+    ArrayList<Integer> grades = new ArrayList<>();
+
+    // Constructor
+    Student(String name) {
+        this.name = name;
+    }
+
+    // Add a grade to the student's list
+    void addGrade(int grade) {
+        grades.add(grade);
+    }
+
+    // Calculate average grade
+    double getAverage() {
+        if (grades.isEmpty()) return 0;
+        int sum = 0;
+        for (int g : grades) sum += g;
+        return (double) sum / grades.size();
+    }
+
+    // Get highest grade
+    int getHighest() {
+        int max = Integer.MIN_VALUE;
+        for (int g : grades) {
+            if (g > max) max = g;
+        }
+        return max;
+    }
+
+    // Get lowest grade
+    int getLowest() {
+        int min = Integer.MAX_VALUE;
+        for (int g : grades) {
+            if (g < min) min = g;
+        }
+        return min;
+    }
+}
+
+// Main class
+public class StudentGradeTracker {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Student> students = new ArrayList<>();
+
+        System.out.println("==== Student Grade Tracker ====");
+        System.out.print("Enter number of students: ");
+        int n = sc.nextInt();
+        sc.nextLine(); // consume newline
+
+        // Input details for each student
+        for (int i = 0; i < n; i++) {
+            System.out.print("\nEnter name of Student " + (i + 1) + ": ");
+            String name = sc.nextLine();
+            Student student = new Student(name);
+
+            System.out.print("Enter number of subjects for " + name + ": ");
+            int subjects = sc.nextInt();
+
+            for (int j = 0; j < subjects; j++) {
+                System.out.print("Enter grade for subject " + (j + 1) + ": ");
+                int grade = sc.nextInt();
+                student.addGrade(grade);
+            }
+            sc.nextLine(); // consume newline
+            students.add(student);
+        }
+
+        // Display report
+        System.out.println("\n===== Student Grade Report =====");
+        for (Student s : students) {
+            System.out.println("\nStudent: " + s.name);
+            System.out.println("Grades: " + s.grades);
+            System.out.printf("Average Score: %.2f\n", s.getAverage());
+            System.out.println("Highest Score: " + s.getHighest());
+            System.out.println("Lowest Score: " + s.getLowest());
+        }
+
+        sc.close();
+    }
+}
